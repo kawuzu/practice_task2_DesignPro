@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Список заявок для администратора</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Статус</th>
+            <th>Пользователь</th>
+            <th>Дата создания</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in requests %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.status }}</td>
+            <td>{{ request.user.username }}</td>
+            <td>{{ request.created_at }}</td>
+            <td>
+                <a href="{% url 'request_detail' request_id=request.id %}" class="btn btn-primary btn-sm">Изменить статус</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Заявок не найдено.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

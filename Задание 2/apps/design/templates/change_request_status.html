@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Изменение статуса заявки</h1>
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="new_status">Новый статус ({{request_obj.status}}):</label>
+        <select class="form-control" id="new_status" name="new_status" required >
+            <option value="">Выберите новый статус</option>
+            <option value="Выполнено">Выполнено</option>
+            <option value="Принято в работу">Принято в работу</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="comment">Комментарий:</label>
+        <textarea class="form-control" id="comment" name="comment" rows="3">{{request_obj.comment}}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="image">Изображение дизайна:</label>
+        <input type="file" class="form-control-file" id="image" name="image">
+    </div>
+    <button type="submit" class="btn btn-primary">Обновить статус</button>
+</form>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
