@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Добро пожаловать, {{ user.username }}!</h1>
+    <p>Здесь вы можете просмотреть ваши заявки.</p>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+<a href="{% url 'create_request' %}" class="btn btn-primary mb-4">Создать новую заявку</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Категория</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in user_requests %}
+        <tr>
+            <td>{{ request.title }}</td>
+            <td>{{ request.description }}</td>
+            <td>{{ request.category.name }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                {% if request.status != 'Принято в работу' and request.status != 'Выполнено' %}
+                <a href="{% url 'delete_request' request.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">У вас пока нет ни одной заявки.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'logout' %}" class="btn btn-secondary">Выйти</a>
+</div> {% endblock %}

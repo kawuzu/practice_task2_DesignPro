@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Последние выполненные заявки</h1>
+
+    <div class="row">
+        {% for request in completed_requests %}
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                {% if request.photo %}
+                <img src="{{ request.photo.url }}" class="card-img-top" alt="{{ request.title }}">
+                {% else %}
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="{{ request.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ request.title }}</h5>
+                    <p class="card-text">{{ request.category.name }}</p>
+                    <p class="card-text">{{ request.created_at|date:"d.m.Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-md-12">
+            <p>Нет выполненных заявок.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4">
+        <h2>Заявки в работе</h2>
+        <p>Количество заявок в статусе "Принято в работу": {{ in_progress_count }}</p>
+    </div>
+</div>
+{% endblock %}

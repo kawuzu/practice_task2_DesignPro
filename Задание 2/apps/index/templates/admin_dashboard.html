@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Панель администратора</h1>
+    <br/>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card border-primary mb-3 operation-card" data-operation="manage_requests">
+                <div class="card-body text-primary">
+                    <h5 class="card-title text-center">Управление заявками</h5>
+                </div>
+            </div>
+            <div class="card border-primary mb-3 operation-card" data-operation="manage_categories">
+                <div class="card-body text-primary">
+                    <h5 class="card-title text-center ">Управление категориями</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" id="operation-form">
+        {% csrf_token %}
+        <input type="hidden" id="action" name="action" value="">
+    </form>
+</div>
+
+<script>
+$(document).ready(function() {
+    $(".operation-card").click(function() {
+        var operation = $(this).data("operation");
+        $("#action").val(operation);
+        $("#operation-form").submit();
+    });
+});
+</script>
+{% endblock %}
