@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from apps.design.models import Request
+from task2.apps.design.models import Request
 
 
 def index_page(request):
